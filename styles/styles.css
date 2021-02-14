@@ -40,11 +40,11 @@ nav {
 }
 
 #shop-icon {
-  content: url("/assets/shop-icon.png");
+  content: url("../assets/shop-icon.png");  /* Fixed path by adding ".." */
 }
 
 #cart-icon {
-  content: url("/assets/cart-icon.png");
+  content: url("../assets/cart-icon.png");  /* Fixed path by adding ".." */
 }
 
 /* Custom Element CSS starts here */
