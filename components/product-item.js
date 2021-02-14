@@ -45,34 +45,44 @@ class ProductItem extends HTMLElement {
 		}
 		
 		//add on click functionality to button:
-		cartButton.onclick = function () {
-			if (cartButton.textContent == 'Remove from Cart'){
-        
-        cartButton.textContent = "Add to Cart";
-        alert('Item was removed from your cart');
-				
-        itemsInCart = JSON.parse(myStorage.getItem('itemsInCart'));
-				
-        // Convert string to int: https://www.w3schools.com/jsref/jsref_parseint.asp
-				cartCount.textContent = parseInt(cartCount.textContent) - 1;  //decrement the size
-				
-        // Help to modify/access array:
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice 
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf 
-        itemsInCart.splice(itemsInCart.indexOf(id), 1);
-				myStorage.setItem('itemsInCart', JSON.stringify(itemsInCart));
-				
-			}
-			else{
-				itemsInCart = JSON.parse(myStorage.getItem('itemsInCart'));
-				cartButton.textContent = "Remove from Cart";
-				cartCount.textContent = parseInt(cartCount.textContent) + 1; // Convert string to int: https://www.w3schools.com/jsref/jsref_parseint.asp
-				itemsInCart.push(id);
-				myStorage.setItem("itemsInCart", JSON.stringify(itemsInCart));
-				alert('Item was added to your cart');
-			}
-		}
+		cartButton.onclick = function(){
+      updateCartButton();
+    }
 		
+    function updateCartButton() {
+      if (cartButton.textContent == 'Remove from Cart'){
+        removeItem();
+      }
+      else{
+        addItem();
+      }
+    }
+
+    function removeItem(){
+      cartButton.textContent = "Add to Cart";
+      alert('Item was removed from your cart');
+        
+      itemsInCart = JSON.parse(myStorage.getItem('itemsInCart'));
+        
+      // Convert string to int: https://www.w3schools.com/jsref/jsref_parseint.asp
+      cartCount.textContent = parseInt(cartCount.textContent) - 1;  //decrement the size
+        
+      // Help to modify/access array:
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice 
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf 
+      itemsInCart.splice(itemsInCart.indexOf(id), 1);
+      myStorage.setItem('itemsInCart', JSON.stringify(itemsInCart));
+    }
+
+    function addItem(){
+      itemsInCart = JSON.parse(myStorage.getItem('itemsInCart'));
+      cartButton.textContent = "Remove from Cart";
+      cartCount.textContent = parseInt(cartCount.textContent) + 1; // Convert string to int: https://www.w3schools.com/jsref/jsref_parseint.asp
+      itemsInCart.push(id);
+      myStorage.setItem("itemsInCart", JSON.stringify(itemsInCart));
+      alert('Item was added to your cart');
+    }
+
 		//Styling the shadow DOM:
     //Taken from https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM 
     //and https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
