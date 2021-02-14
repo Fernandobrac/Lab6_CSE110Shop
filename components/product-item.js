@@ -47,18 +47,26 @@ class ProductItem extends HTMLElement {
 		//add on click functionality to button:
 		cartButton.onclick = function () {
 			if (cartButton.textContent == 'Remove from Cart'){
-
-				itemsInCart = JSON.parse(myStorage.getItem('itemsInCart'));
-				cartButton.textContent = "Add to Cart";
-				cartCount.textContent = parseInt(cartCount.textContent) - 1;
-				itemsInCart.splice(itemsInCart.indexOf(id), 1);
+        
+        cartButton.textContent = "Add to Cart";
+        alert('Item was removed from your cart');
+				
+        itemsInCart = JSON.parse(myStorage.getItem('itemsInCart'));
+				
+        // Convert string to int: https://www.w3schools.com/jsref/jsref_parseint.asp
+				cartCount.textContent = parseInt(cartCount.textContent) - 1;  //decrement the size
+				
+        // Help to modify/access array:
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice 
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf 
+        itemsInCart.splice(itemsInCart.indexOf(id), 1);
 				myStorage.setItem('itemsInCart', JSON.stringify(itemsInCart));
-				alert('Item was removed from your cart');
+				
 			}
 			else{
 				itemsInCart = JSON.parse(myStorage.getItem('itemsInCart'));
 				cartButton.textContent = "Remove from Cart";
-				cartCount.textContent = parseInt(cartCount.textContent) + 1;
+				cartCount.textContent = parseInt(cartCount.textContent) + 1; // Convert string to int: https://www.w3schools.com/jsref/jsref_parseint.asp
 				itemsInCart.push(id);
 				myStorage.setItem("itemsInCart", JSON.stringify(itemsInCart));
 				alert('Item was added to your cart');
@@ -67,6 +75,7 @@ class ProductItem extends HTMLElement {
 		
 		//Styling the shadow DOM:
     //Taken from https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM 
+    //and https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
 		let style = document.createElement('style');
 		//CSS format copied from styles.css file:
     style.textContent = `
@@ -138,9 +147,11 @@ class ProductItem extends HTMLElement {
     //Taken from: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM 
 		shadow.appendChild(style, li);
 		shadow.appendChild(li);
+
 		li.appendChild(itemImage);
+    li.appendChild(itemPrice);
 		li.appendChild(itemTitle);
-		li.appendChild(itemPrice);
+		
 		li.appendChild(cartButton);
 		
 	}
